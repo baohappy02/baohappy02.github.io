@@ -11,7 +11,7 @@ const Home: FC = props => {
 			<div className="flex flex-col bg-slate-600 dark:bg-slate-400  w-full max-w-7xl min-h-[100vh]">
 				<Header />
 
-				<div className="flex flex-col justify-between items-center w-full h-full min-h-[calc(100vh-82px)] py-[10%] 2xl:py-[13%]">
+				<div className="flex flex-col justify-evenly items-center w-full h-full min-h-[calc(100vh-82px)]">
 					<WordInput />
 					<KeyBoard />
 				</div>

@@ -9,19 +9,21 @@ const Header: FC = props => {
 	return (
 		<StrictMode>
 			<Fragment>
-				<div className="flex justify-between items-center w-full h-[70px] p-10 border-b-2 text-white dark:text-black">
-					<div className="">Hi!!</div>
-					<div className="text-3xl uppercase font-bold">Wordle</div>
+				<div className="relative flex justify-between items-center w-full h-[70px] p-10 border-b-2 text-white dark:text-black">
+					<div className="text-base font-medium">Welcome new guess</div>
+					<div className="absolute top-[50%] bottom-0 left-[50%] translate-x-[-50%] translate-y-[-50%] text-3xl uppercase font-bold mx-auto">
+						Wordle
+					</div>
 					<button
-						className="relative w-7 md:w-10 h-7 md:h-10 overflow-hidden flex justify-center items-center bg-black rounded-xl"
+						className="relative w-10 h-10 overflow-hidden flex justify-center items-center bg-black rounded-xl"
 						onClick={toggleDarkMode}
 					>
 						<div
-							className={`absolute top-0 left-0 flex justify-center  items-center w-14 md:w-20 h-7 md:h-10 transition-all duration-500 ease-in-out ${
+							className={`absolute top-0 left-0 flex justify-center  items-center w-20 h-10 transition-all duration-500 ease-in-out ${
 								!darkMode ? "translate-x-[-50%]" : ""
 							}`}
 						>
-							<div className="flex justify-center items-center w-[28px] md:w-[40px] h-[28px] md:h-[40px]">
+							<div className="flex justify-center items-center w-[40px] h-[40px]">
 								<svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
 									<path
 										fillRule="evenodd"
@@ -41,7 +43,7 @@ const Header: FC = props => {
 									></path>
 								</svg>
 							</div>
-							<div className="flex justify-center items-center w-[28px] md:w-[40px] h-[28px] md:h-[40px]">
+							<div className="flex justify-center items-center w-[40px] h-[40px]">
 								<svg
 									viewBox="0 0 24 24"
 									fill="none"

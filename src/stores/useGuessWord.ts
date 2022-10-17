@@ -8,13 +8,19 @@ type Word = {
 	result: string;
 };
 
+type WordList = {
+	slot: number;
+	result: Word[];
+};
+
 type GuessWordStore = {
 	inputIndex: number;
 	lineIndex: number;
 	word: Word[];
-	wordList: string[];
+	wordList: WordList[];
 	incrementCharactor: (newWord: string) => void;
 	decrementCharactor: () => void;
+	updateWordResult: (newWord: Word[]) => void;
 	incrementIndex: () => void;
 	decrementIndex: () => void;
 	incrementLine: () => void;
@@ -25,6 +31,20 @@ const addChar = (word: Word[], newChar: string): Word[] => {
 	return [...word, { guess: newChar, result: "" }];
 };
 
+const handleUpdateWord = (word: Word[], newWord: Word[]): Word[] => {
+	return word.map((item, index) => Object.assign({}, item, newWord[index]));
+};
+
+const addWordList = (wordList: WordList[], word: Word[], slot: number, newWord: Word[]): WordList[] => {
+	return [
+		...wordList,
+		{
+			slot: slot,
+			result: handleUpdateWord(word, newWord),
+		},
+	];
+};
+
 const useGuessWord = create<GuessWordStore>(
 	(set, get): GuessWordStore => ({
 		inputIndex: 0,
@@ -32,31 +52,6 @@ const useGuessWord = create<GuessWordStore>(
 		word: [],
 		wordList: [],
 		incrementCharactor: newWord => {
-			// if (
-			// 	get().inputIndex >= 0 &&
-			// 	get().inputIndex < MAX_WORD_LENGTH &&
-			// 	get().lineIndex > 0 &&
-			// 	get().wordList.length < MAX_WORD_LINE
-			// ) {
-			// 	console.log("a");
-			// 	return set(state => ({
-			// 		inputIndex: state.inputIndex + 1,
-			// 		word: state.word + newWord,
-			// 	}));
-			// }
-
-			// console.log(get().inputIndex === MAX_WORD_LENGTH, get().lineIndex > 0);
-			// if (get().inputIndex === MAX_WORD_LENGTH && get().lineIndex > 0) {
-			// 	console.log("b");
-
-			// 	return set(state => ({
-			// 		inputIndex: 0,
-			// 		word: newWord,
-			// 		lineIndex: state.lineIndex + 1,
-			// 		wordList: [...state.wordList, state.word],
-			// 	}));
-			// }
-
 			if (get().inputIndex + 1 <= MAX_WORD_LENGTH) {
 				set(state => ({
 					inputIndex: state.inputIndex + 1,
@@ -64,10 +59,24 @@ const useGuessWord = create<GuessWordStore>(
 				}));
 			}
 		},
-		decrementCharactor: () =>
-			set(state => ({
-				word: state.word.splice(-1),
-			})),
+		decrementCharactor: () => {
+			if (get().inputIndex >= 0 && get().inputIndex <= MAX_WORD_LENGTH) {
+				set(state => ({
+					inputIndex: state.inputIndex - 1,
+					word: state.word.slice(0, -1),
+				}));
+			}
+		},
+		updateWordResult: newWord => {
+			if (get().inputIndex > 0 && get().inputIndex === MAX_WORD_LENGTH && get().inputIndex === MAX_WORD_LENGTH) {
+				set(state => ({
+					inputIndex: 0,
+					lineIndex: state.lineIndex + 1,
+					word: [],
+					wordList: addWordList(state.wordList, state.word, state.lineIndex, newWord),
+				}));
+			}
+		},
 		incrementIndex: () =>
 			set(state => ({
 				inputIndex: state.inputIndex + 1,
