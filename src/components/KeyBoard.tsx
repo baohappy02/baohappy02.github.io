@@ -10,6 +10,12 @@ type Word = {
 	result: string;
 };
 
+type WordResponse = {
+	slot: number;
+	guess: string;
+	result: string;
+};
+
 const MAX_WORD_LENGTH = 5;
 
 const KEY_BOARD_ROWS = [
@@ -49,7 +55,7 @@ const KeyBoard: FC = props => {
 		},
 		{
 			onSuccess: res => {
-				if (res) return updateWordResult(res);
+				if (res) return updateWordResult(res as unknown as WordResponse[]);
 			},
 			onError: err => {
 				console.error(err);

@@ -8,6 +8,12 @@ type Word = {
 	result: string;
 };
 
+type WordResponse = {
+	slot: number;
+	guess: string;
+	result: string;
+};
+
 type WordList = {
 	slot: number;
 	result: Word[];
@@ -20,7 +26,7 @@ type GuessWordStore = {
 	wordList: WordList[];
 	incrementCharactor: (newWord: string) => void;
 	decrementCharactor: () => void;
-	updateWordResult: (newWord: Word[]) => void;
+	updateWordResult: (newWord: WordResponse[]) => void;
 	incrementIndex: () => void;
 	decrementIndex: () => void;
 	incrementLine: () => void;
